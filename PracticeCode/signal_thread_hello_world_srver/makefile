@@ -1,4 +1,4 @@
-#makefile wrote by human (not by cmake)
+#makefile written by human (not by cmake)
 
 sourece_file=hello_world_server
 
