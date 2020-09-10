@@ -1,5 +1,6 @@
 #include "server_socket.h"
 #include "socket_address.h"
+#include "socket_exception.h"
 #include <cstring>
 
 using namespace SONNIE;
