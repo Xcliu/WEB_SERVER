@@ -1,0 +1,72 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/server_socket.cpp
+server_socket.h
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/server_socket.h
+socket_address.h
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_address.h
+socket_exception.h
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_exception.h
+cstring
+-
+algorithm
+-
+iostream
+-
+
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/server_socket.h
+socket_related_head_file.h
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_related_head_file.h
+socket_address.h
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_address.h
+string
+-
+
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_address.cpp
+socket_address.h
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_address.h
+
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_address.h
+socket_related_head_file.h
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_related_head_file.h
+
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_exception.cpp
+socket_exception.h
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_exception.h
+
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_exception.h
+exception
+-
+string
+-
+
+/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_related_head_file.h
+stdio.h
+-
+stdlib.h
+-
+sys/socket.h
+-
+sys/types.h
+-
+sys/stat.h
+-
+sys/uio.h
+-
+sys/sendfile.h
+-
+fcntl.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+unistd.h
+-
+
