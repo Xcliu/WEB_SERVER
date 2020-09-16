@@ -8,7 +8,6 @@
 
 namespace SONNIE{
 
-
 class server_socket
 {
     private:
@@ -27,10 +26,12 @@ class server_socket
     
 
         size_t max_buffer_size;
-        std::string recvd_mesg_buffer;
-        std::string send_mesg_buffer;
+        
+        
 
     public: 
+        std::string recvd_mesg_buffer;
+        std::string send_mesg_buffer;
         server_socket(
             decltype(AF_INET) _ip_version=AF_INET,
             int _client_num=1
@@ -48,9 +49,10 @@ class server_socket
         int listen_ip_port();
         int accept_client_request();
         int receive_data_from_client();
-        int send_short_mag(std::string str);
+        int send_short_mag(const std::string &str);
         int send_file_to_client(const int file_fd, int size)const;
         int close_socket();
+        
 };
 
 } //end of the namespace sonnie

@@ -3,8 +3,8 @@
 using namespace SONNIE;
 
 socket_info_addr_ipv4::socket_info_addr_ipv4(
-            decltype(INADDR_ANY) _ipv4_address=INADDR_ANY,
-            int _server_port=8888)
+            decltype(INADDR_ANY) _ipv4_address,
+            int _server_port)
 {
     addr_ptr=new sockaddr_in();
     addr_ptr->sin_family=AF_INET;
@@ -22,8 +22,8 @@ sockaddr_in *socket_info_addr_ipv4::get_sockaddr()const{
 
 
 socket_info_addr_ipv6::socket_info_addr_ipv6(
-        uint8_t _ipv6_address[16]={0},
-        int _server_port=8888
+        uint8_t _ipv6_address[16],
+        int _server_port
     )
 {
     addr_ptr=new sockaddr_in6();

@@ -2,21 +2,27 @@
 #include "socket_address.h"
 #include "socket_exception.h"
 #include <cstring>
+#include <algorithm>
 
+#include <iostream>
 using namespace SONNIE;
 
 server_socket::server_socket(
-        decltype(AF_INET) _ip_version=AF_INET,
-        int _client_num=1
+        decltype(AF_INET) _ip_version,
+        int _client_num
     ):ip_version(_ip_version),backlog(_client_num)
 {
+    
     server_socket_fd=-1;
     server_connected_socket_fd=-1;
-    max_buffer_size=0;
+    max_buffer_size=1024;
+    
     server_socket_info_ipv4=nullptr;
     client_socket_info_ipv4=nullptr;
-    recvd_mesg_buffer=nullptr;
-    send_mesg_buffer=nullptr;
+    //std::cout << "fuck lib"<< std::endl;
+    recvd_mesg_buffer="";
+    send_mesg_buffer="";
+   
 
 }
 
@@ -30,8 +36,8 @@ int server_socket::create_socket(decltype(SOCK_STREAM) sock_type){
 }
 
 int server_socket::bind_socket_to_ipv4_port(
-            decltype(INADDR_ANY) _ipv4_address=INADDR_ANY,
-            int _server_port=8888
+            decltype(INADDR_ANY) _ipv4_address,
+            int _server_port
         )
 {
     if(ip_version!=AF_INET){
@@ -51,8 +57,8 @@ int server_socket::bind_socket_to_ipv4_port(
 }
 
 int server_socket::bind_socket_to_ipv6_port(
-            uint8_t _ipv6_address[16]={0},
-            int _server_port=8888
+            uint8_t _ipv6_address[16],
+            int _server_port
         )
 {
     if(ip_version!=AF_INET6){
@@ -76,6 +82,7 @@ int server_socket::listen_ip_port(){
     if(result<0){
         throw socket_exception("failed to listen socket!");
     }
+    return result;
 }
 
 int server_socket::accept_client_request(){
@@ -88,7 +95,6 @@ int server_socket::accept_client_request(){
         if(server_connected_socket_fd==-1){
             throw socket_exception("failed to accept!");
         }
-        return server_socket_fd;
     }else if(ip_version==AF_INET6){
         client_socket_info_ipv6=new socket_info_addr_ipv6();
         sockaddr_in6 *temp=client_socket_info_ipv6->get_sockaddr();
@@ -97,18 +103,20 @@ int server_socket::accept_client_request(){
         if(server_connected_socket_fd==-1){
             throw socket_exception("failed to accept!");
         }
-        return server_socket_fd;
+        
     }
+    return server_socket_fd;
 }
 
 int server_socket::receive_data_from_client(){
-    char temp[max_buffer_size]{'\0'};
+    char temp[max_buffer_size];
+    std::fill(temp,temp+max_buffer_size,'\0');
     int result=recv(server_connected_socket_fd,temp,max_buffer_size,0);
     recvd_mesg_buffer=temp;
     return result;
 }
 
- int server_socket::send_short_mag(std::string str){
+ int server_socket::send_short_mag(const std::string &str){
     //char buf[520]="HTTP/1.1 200 ok\r\nconnection: close\r\n\r\n";//HTTP响应
     int s = send(server_connected_socket_fd,str.c_str(),str.size(),0);//发送响应
     send_mesg_buffer=str;
