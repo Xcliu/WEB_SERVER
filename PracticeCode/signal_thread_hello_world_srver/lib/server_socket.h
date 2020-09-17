@@ -15,7 +15,7 @@ class server_socket
         const decltype(AF_INET) ip_version;
         
         int server_socket_fd;
-        int server_connected_socket_fd;
+        //int server_connected_socket_fd;
         
         
         socket_info_addr_ipv4 *server_socket_info_ipv4;
@@ -30,6 +30,7 @@ class server_socket
         
 
     public: 
+        int server_connected_socket_fd;
         std::string recvd_mesg_buffer;
         std::string send_mesg_buffer;
         server_socket(
@@ -50,7 +51,7 @@ class server_socket
         int accept_client_request();
         int receive_data_from_client();
         int send_short_mag(const std::string &str);
-        int send_file_to_client(const int file_fd, int size)const;
+        int send_file_to_client(int file_fd, int size)const;
         int close_socket();
         
 };

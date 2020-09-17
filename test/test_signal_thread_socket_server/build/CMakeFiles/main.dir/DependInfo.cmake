@@ -11,6 +11,7 @@ set(CMAKE_CXX_COMPILER_ID "AppleClang")
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/Users/liuxingchen/Library/Mobile Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib"
+  "."
   )
 
 # Targets to which this target links.

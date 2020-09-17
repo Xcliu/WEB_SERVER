@@ -11,6 +11,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.8.0/CMakeCCompiler.cmake"
   "CMakeFiles/3.8.0/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.8.0/CMakeSystem.cmake"
+  "../socketConfig.h.in"
   "/opt/local/share/cmake-3.8/Modules/CMakeCInformation.cmake"
   "/opt/local/share/cmake-3.8/Modules/CMakeCXXInformation.cmake"
   "/opt/local/share/cmake-3.8/Modules/CMakeCommonLanguageInclude.cmake"
@@ -40,6 +41,7 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
+  "socketConfig.h"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 

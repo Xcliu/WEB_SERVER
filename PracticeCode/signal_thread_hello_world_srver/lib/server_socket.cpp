@@ -128,10 +128,9 @@ int server_socket::send_file_to_client(const int file_fd, int size)const{
         throw socket_exception("the szie of sent file should be positive");
     }
     off_t send_size=size; //in byte;
-    struct sf_hdtr obj;
-    int temp=-1;
-    temp=sendfile(file_fd,server_connected_socket_fd,0,&send_size,&obj,0);//零拷贝发送消息体
-    if(temp<0){
+    struct sf_hdtr obj{nullptr,0,nullptr,0}; //local scope下不会做默认初始化的！！！
+    int temp=sendfile(file_fd,server_connected_socket_fd,0,&send_size,&obj,0);//零拷贝发送消息体
+    if(temp==-1){
         throw socket_exception("failed to send file.");
     }
     return temp;

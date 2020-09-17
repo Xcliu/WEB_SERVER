@@ -6,4 +6,5 @@ CMakeFiles/main.dir/main.cpp.o: /Users/liuxingchen/Library/Mobile\ Documents/com
 CMakeFiles/main.dir/main.cpp.o: /Users/liuxingchen/Library/Mobile\ Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_exception.h
 CMakeFiles/main.dir/main.cpp.o: /Users/liuxingchen/Library/Mobile\ Documents/com~apple~CloudDocs/GIT_PROJECT_ALL/WEB_server/WEB_server/PracticeCode/signal_thread_hello_world_srver/lib/socket_related_head_file.h
 CMakeFiles/main.dir/main.cpp.o: ../main.cpp
+CMakeFiles/main.dir/main.cpp.o: socketConfig.h
 
