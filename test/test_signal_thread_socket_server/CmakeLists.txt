@@ -1,7 +1,12 @@
 cmake_minimum_required(VERSION 3.8)
 project(test_signal_thread_socket_server VERSION 0.0)
 
-add_definitions(-std=c++11)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+
+set(INDEX_HTML_DIR "${CMAKE_CURRENT_SOURCE_DIR}/hello.html")
+configure_file(socketConfig.h.in socketConfig.h)
 
 #get top dir for include and lib PATH
 get_filename_component(temp_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
@@ -18,4 +23,7 @@ target_include_directories(socket PUBLIC ${socket_code_dir})
 
 add_executable(main main.cpp)
 target_link_libraries(main PUBLIC socket)
-target_include_directories(main PUBLIC ${socket_code_dir})
+target_include_directories(main PUBLIC ${socket_code_dir}
+                                PUBLIC ${PROJECT_BINARY_DIR})
+
+
