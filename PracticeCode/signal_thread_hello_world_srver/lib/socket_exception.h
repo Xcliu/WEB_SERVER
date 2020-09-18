@@ -13,5 +13,4 @@ class socket_exception:std::exception{
         std::string error_msg; 
 }; 
 }
-
 #endif
