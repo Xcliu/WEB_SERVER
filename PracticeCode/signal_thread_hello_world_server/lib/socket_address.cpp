@@ -35,7 +35,7 @@ void socket_info_addr_ipv4::change_ip_port_ipv4(
         int _server_port
     )
 {
-    addr_ptr->sin_addr.s_addr=htons(_ipv4_address);
+    addr_ptr->sin_addr.s_addr==htons(_ipv4_address);
     addr_ptr->sin_port=htons(_server_port);    
 }
 

@@ -31,7 +31,11 @@ server_socket::~server_socket(){
 void server_socket::create_socket(){
     //another scoket is SOCK_DGRAM (based on UDP)
     //the operations on TCP and udp are totally different
-    server_socket_fd=socket(ip_version,socket_type,0);
+    if(socket_type==SOCK_DGRAM){
+        server_socket_fd=socket(ip_version,socket_type,IPPROTO_UDP);
+    }else if(socket_type==SOCK_STREAM){
+        server_socket_fd=socket(ip_version,socket_type,0);
+    }
     // std::cout<< server_socket_fd <<std::endl;
     if(server_socket_fd<0){
         throw socket_exception("failed to create a socket");

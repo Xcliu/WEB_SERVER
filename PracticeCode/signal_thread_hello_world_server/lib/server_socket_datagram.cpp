@@ -13,7 +13,6 @@ server_socket_datagram::server_socket_datagram(
     ):server_socket(_ip_version,SOCK_DGRAM)
 {
     if(ip_version==AF_INET){
-        
         client_socket_info_ipv4=new socket_info_addr_ipv4();
     }else if(ip_version==AF_INET6){
         client_socket_info_ipv6=new socket_info_addr_ipv6();
@@ -55,15 +54,29 @@ void server_socket_datagram::send_short_mesg(const std::string &str){
     }
     socklen_t ipv4_len=sizeof(*client_socket_info_ipv4);
     socklen_t ipv6_len=sizeof(*client_socket_info_ipv6);
-    socklen_t *dest_len=(ip_version==AF_INET?&ipv4_len:&ipv6_len);
+    socklen_t dest_len=(ip_version==AF_INET?ipv4_len:ipv6_len);
 
-    sockaddr *dest_ptr=ip_version==AF_INET?(sockaddr *)client_socket_info_ipv4:
-        (sockaddr *)client_socket_info_ipv6;
-    ssize_t mesg_len = sendto(server_socket_fd,str.c_str(),str.size(),0,dest_ptr,*dest_len);//发送响应
+    sockaddr *dest_ptr=(ip_version==AF_INET?(sockaddr *)client_socket_info_ipv4:
+        (sockaddr *)client_socket_info_ipv6);
+    
+    std::cout<< server_socket_fd << str <<str.size()<<std::endl;
+    std::cout<< ntohs((client_socket_info_ipv4->get_sockaddr())->sin_addr.s_addr)<<std::endl;
+    
+    sockaddr_in siTo;
+    siTo.sin_family = AF_INET;
+    siTo.sin_port = htons(9527);
+    
+    siTo.sin_addr.s_addr = inet_addr("127.0.0.1");
+    std::cout<< ntohs(siTo.sin_addr.s_addr)<<std::endl;
+
+    ssize_t mesg_len = sendto(server_socket_fd,str.c_str(),str.size(),0,(sockaddr*)&siTo,sizeof(siTo));//发送响应
     if(mesg_len==max_buffer_size){
-        throw socket_exception("the receive buffer is overflowed");
+        throw socket_exception("the send buffer is overflowed");
     }else if(mesg_len<0){
-        throw socket_exception("failed to receive message");
+        int err = errno;
+        fprintf(stderr, "*** ERROR  failed:%d(%s)\n", err, strerror(err) );
+        exit(EXIT_FAILURE);
+        throw socket_exception("failed to send message");
     }
     send_mesg_buffer=str;
     return ;
