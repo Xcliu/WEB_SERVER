@@ -5,37 +5,33 @@
 #include "socket_address.h"
 #include <string>
 
-
 namespace SONNIE{
 
-class server_socket
-{
-    private:
-        const int backlog; // how many clients cloud be blocked in one server socket 
+class server_socket{
+    protected:
         const decltype(AF_INET) ip_version;
-        
+        const decltype(SOCK_STREAM) socket_type;
+
         int server_socket_fd;
-        //int server_connected_socket_fd;
-        int server_connected_socket_fd;
-        
+        /*
+        * allocating memory in heap
+        */
         socket_info_addr_ipv4 *server_socket_info_ipv4;
         socket_info_addr_ipv4 *client_socket_info_ipv4;
-        
+
         socket_info_addr_ipv6 *server_socket_info_ipv6;
         socket_info_addr_ipv6 *client_socket_info_ipv6;
-    
 
         size_t max_buffer_size;
         std::string recvd_mesg_buffer;
         std::string send_mesg_buffer;
-
-    public: 
+    public:
         server_socket(
             decltype(AF_INET) _ip_version=AF_INET,
-            int _client_num=1
+            decltype(SOCK_STREAM) _socket_type=SOCK_STREAM
         );
-        ~server_socket();
-        void create_socket(decltype(SOCK_STREAM) sock_type);
+        virtual ~server_socket();
+        void create_socket();
         void bind_socket_to_ipv4_port(
             decltype(INADDR_ANY) _ipv4_address=INADDR_ANY,
             int _server_port=8888
@@ -44,20 +40,12 @@ class server_socket
             uint8_t _ipv6_address[16]={0},
             int _server_port=8888
         );
-        void listen_ip_port();
-        void accept_client_request();
-        const std::string &receive_data_from_client();
-        void send_short_mag(const std::string &str);
-        void send_file_to_client(int file_fd, int size)const;
-        void close_connect_socket();
-        /*
-        added in 9.18.2020
-        */
-        int get_connect_fd()const;
-        void set_msg_buffer_size(size_t size);
-   
+        virtual const std::string &receive_data_from_client(bool save_client_addr)=0;
+        virtual void send_short_mesg(const std::string &str)=0;
+        
+        void close_server_socket()const;
+        void set_mesg_buffer_size(size_t size);      
+};
 };
 
-} //end of the namespace sonnie
 #endif
-

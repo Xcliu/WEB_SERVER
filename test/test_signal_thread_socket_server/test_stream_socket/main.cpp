@@ -1,4 +1,4 @@
-#include "server_socket.h"
+#include "server_socket_stream.h"
 #include "socket_related_head_file.h"
 #include "socket_exception.h"
 #include <iostream>
@@ -10,18 +10,17 @@ using namespace SONNIE;
 int main(){
     std::cout << "hello world WEB server!" <<std::endl;
     try{
-        server_socket server_socket_obj(AF_INET,1);
-        server_socket_obj.create_socket(SOCK_STREAM);
+        server_socket_stream server_socket_obj(AF_INET,1);
+        server_socket_obj.create_socket();
         server_socket_obj.bind_socket_to_ipv4_port();
         server_socket_obj.listen_ip_port();
-        std::cout << "fuck main"<< std::endl;
-    
         while(1){
             server_socket_obj.accept_client_request();
-            std::string received_mag=server_socket_obj.receive_data_from_client();
-            //std::string received_mag=server_socket_obj.recvd_mesg_buffer;
+            std::cout << "fuck main"<< std::endl;
+            std::string received_mesg=server_socket_obj.receive_data_from_client(1);
+            std::cout<< received_mesg <<std::endl;
             std::string str_send="HTTP/1.1 200 ok\r\nconnection: close\r\n\r\n";
-            server_socket_obj.send_short_mag(str_send);
+            server_socket_obj.send_short_mesg(str_send);
             /*
             通过宏定义，利用cmake获取html文件的路径
             */
