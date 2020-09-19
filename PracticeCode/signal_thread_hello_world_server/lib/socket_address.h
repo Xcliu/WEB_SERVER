@@ -14,7 +14,11 @@ class socket_info_addr_ipv4
             int _server_port=8888
         );
         ~socket_info_addr_ipv4();
-        sockaddr_in* get_sockaddr()const;
+        sockaddr_in *get_sockaddr()const;
+        void change_ip_port_ipv4(
+            decltype(INADDR_ANY) _ipv4_address,
+            int _server_port
+        );
 };
 
 
@@ -33,6 +37,10 @@ class socket_info_addr_ipv6
         );
         ~socket_info_addr_ipv6();
         sockaddr_in6* get_sockaddr()const;
+        void change_ip_port_ipv6(
+            uint8_t _ipv6_address[16],
+            int _server_port
+        );
 
 };
 

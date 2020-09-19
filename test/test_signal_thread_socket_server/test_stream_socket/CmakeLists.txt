@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(test_signal_thread_socket_server VERSION 0.0)
+project(test_signal_thread_socket_server_stream VERSION 0.0)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -9,16 +9,20 @@ set(INDEX_HTML_DIR "${CMAKE_CURRENT_SOURCE_DIR}/hello.html")
 configure_file(socketConfig.h.in socketConfig.h)
 
 #get top dir for include and lib PATH
-get_filename_component(temp_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
-get_filename_component(PARENT_DIR ${temp_DIR} DIRECTORY)
+get_filename_component(PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
+get_filename_component(PARENT_DIR ${PARENT_DIR} DIRECTORY)
+get_filename_component(PARENT_DIR ${PARENT_DIR} DIRECTORY)
 message(${PARENT_DIR})
 
-set(socket_code_dir "${PARENT_DIR}/PracticeCode/signal_thread_hello_world_srver/lib")
+set(socket_code_dir "${PARENT_DIR}/PracticeCode/signal_thread_hello_world_server/lib")
 set(socket_addr "${socket_code_dir}/socket_address.cpp")
 set(server_socket "${socket_code_dir}/server_socket.cpp")
+set(server_socket_stream "${socket_code_dir}/server_socket_stream.cpp")
 set(socket_exception "${socket_code_dir}/socket_exception.cpp")
 
-add_library(socket  ${server_socket} ${socket_addr} ${socket_exception})
+add_library(socket  ${socket_exception}  ${socket_addr} 
+            ${server_socket} ${server_socket_stream})
+
 target_include_directories(socket PUBLIC ${socket_code_dir})
 
 add_executable(main main.cpp)
