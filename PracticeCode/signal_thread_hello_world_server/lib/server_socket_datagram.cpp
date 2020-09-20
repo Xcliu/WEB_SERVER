@@ -13,9 +13,21 @@ server_socket_datagram::server_socket_datagram(
     ):server_socket(_ip_version,SOCK_DGRAM)
 {
     if(ip_version==AF_INET){
-        client_socket_info_ipv4=new socket_info_addr_ipv4();
+        try{
+            client_socket_info_ipv4=new socket_info_addr_ipv4();
+        }catch(const std::bad_alloc &_bad_alloc){
+            client_socket_info_ipv4=nullptr;
+            code_position_info();
+            std::cout<<_bad_alloc.what()<<std::endl;;
+        }
     }else if(ip_version==AF_INET6){
-        client_socket_info_ipv6=new socket_info_addr_ipv6();
+        try{
+            client_socket_info_ipv6=new socket_info_addr_ipv6();
+        }catch(const std::bad_alloc &_bad_alloc){
+            client_socket_info_ipv6=nullptr;
+            code_position_info();
+            std::cout<<_bad_alloc.what()<<std::endl;;
+        }
     }
 }
 
@@ -30,25 +42,21 @@ const std::string &server_socket_datagram::receive_data_from_client(bool save_cl
     socklen_t ipv4_len=sizeof(*(client_socket_info_ipv4->get_sockaddr()));
     socklen_t ipv6_len=sizeof(*(client_socket_info_ipv6->get_sockaddr()));
     socklen_t src_len=ip_version==AF_INET?ipv4_len:ipv6_len;
-
-    sockaddr *dest_ptr=ip_version==AF_INET?(sockaddr *)(client_socket_info_ipv4->get_sockaddr()):
-    (sockaddr *)(client_socket_info_ipv6->get_sockaddr());
     
     sockaddr  *src_ptr=nullptr;
     if(save_client_addr){       
         sockaddr *src_ptr=ip_version==AF_INET?(sockaddr *)(client_socket_info_ipv4->get_sockaddr()):
             (sockaddr *)(client_socket_info_ipv6->get_sockaddr());
     }
-    std::cout<<"before receive sysytem call " <<std::endl;
     ssize_t mesg_len=recvfrom(server_socket_fd,temp,max_buffer_size,0,src_ptr,&src_len);
     //the size of recvd_msg_buffer is equal to result,(the size of received msg)
-    std::cout<<"after receive sysytem call " <<std::endl;
-    recvd_mesg_buffer=temp;
     if(mesg_len==max_buffer_size){
         throw socket_exception("the receive buffer is overflowed");
     }else if(mesg_len<0){
+        systemcall_error_info();
         throw socket_exception("failed to receive message");
     }
+    recvd_mesg_buffer=temp;
     return recvd_mesg_buffer;
 }
 
@@ -60,7 +68,7 @@ void server_socket_datagram::send_short_mesg(const std::string &str){
     socklen_t ipv4_len=sizeof(*(client_socket_info_ipv4->get_sockaddr()));
     socklen_t ipv6_len=sizeof(*(client_socket_info_ipv6->get_sockaddr()));
     socklen_t dest_len=ip_version==AF_INET?ipv4_len:ipv6_len;
-
+    
     sockaddr *dest_ptr=ip_version==AF_INET?(sockaddr *)(client_socket_info_ipv4->get_sockaddr()):
         (sockaddr *)(client_socket_info_ipv6->get_sockaddr());
     
@@ -93,16 +101,15 @@ void server_socket_datagram::send_short_mesg(const std::string &str){
     // siTo.sin6_addr=*dest;//*dest++;
     // std::cout<<(siTo.sin6_addr.s6_addr)<<std::endl;
     // \\\ssize_t mesg_len = sendto(server_socket_fd,str.c_str(),str.size(),0,(sockaddr*)&siTo,sizeof(siTo));//发送响应
+    
     ssize_t mesg_len = sendto(server_socket_fd,str.c_str(),str.size(),0,dest_ptr,dest_len);//发送响应
     if(mesg_len==max_buffer_size){
         throw socket_exception("the send buffer is overflowed");
     }else if(mesg_len<0){
-        int err = errno;
-        fprintf(stderr, "*** ERROR  failed:%d(%s)\n", err, strerror(err) );
-        exit(EXIT_FAILURE);
+        systemcall_error_info();
         throw socket_exception("failed to send message");
     }else if(mesg_len!=0){
-        std::cout<<"send successfully !"<<std::endl;
+        std::cout<<"successfully send! "<<std::endl;
     }
     send_mesg_buffer=str;
     return ;
@@ -116,19 +123,19 @@ void server_socket_datagram::set_client_addr_ipv4(
     if(ip_version!=AF_INET){
             throw socket_exception("non_ipv4_socket can not be set to ipv4 address!");
     }
-    client_socket_info_ipv4->change_ip_port_ipv4(_ipv4_address,_server_port);
+    client_socket_info_ipv4->set_ip_port_ipv4(_ipv4_address,_server_port);
     return ;
 }
 
 void server_socket_datagram::set_client_addr_ipv6(
-        uint8_t _ipv6_address[16],
+        const char *_ipv6_address,
         int _server_port
     )
 {
     if(ip_version!=AF_INET6){
-        throw socket_exception("non_ipv4_socket can not be set to ipv4 address!");
+        throw socket_exception("non_ipv6_socket can not be set to ipv6 address!");
     }
-    client_socket_info_ipv6->change_ip_port_ipv6(_ipv6_address,_server_port);
+    client_socket_info_ipv6->set_ip_port_ipv6(_ipv6_address,_server_port);
     return ;
 }
 

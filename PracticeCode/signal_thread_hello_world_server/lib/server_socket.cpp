@@ -29,8 +29,6 @@ server_socket::~server_socket(){
 }
 
 void server_socket::create_socket(){
-    //another scoket is SOCK_DGRAM (based on UDP)
-    //the operations on TCP and udp are totally different
     if(socket_type==SOCK_DGRAM){
         /*not necessary*/
         server_socket_fd=socket(ip_version,socket_type,IPPROTO_UDP);
@@ -45,15 +43,20 @@ void server_socket::create_socket(){
 }
 
 void server_socket::bind_socket_to_ipv4_port(
-            decltype(INADDR_ANY) _ipv4_address,
+            const char *_ipv4_address,
             int _server_port
         )
 {
     if(ip_version!=AF_INET){
         throw socket_exception("non_ipv4_socket can not be binded to ipv4 address!");
     }
+
     delete server_socket_info_ipv4;
-    server_socket_info_ipv4=new socket_info_addr_ipv4(_ipv4_address,_server_port);
+    server_socket_info_ipv4=new socket_info_addr_ipv4();
+    if(strcmp(_ipv4_address," ")!=0&&_server_port!=0){
+        server_socket_info_ipv4->set_ip_port_ipv4(_ipv4_address,_server_port);
+    }
+
     const sockaddr_in *temp=server_socket_info_ipv4->get_sockaddr();
     socklen_t socket_size=sizeof(*temp);
     int result=bind(
@@ -62,21 +65,27 @@ void server_socket::bind_socket_to_ipv4_port(
         socket_size 
     );
     if(result<0){
+        systemcall_error_info();
         throw socket_exception("failed to bind socket!");
     }
     return ;
 }
 
 void server_socket::bind_socket_to_ipv6_port(
-            struct in6_addr _ipv6_address,
+            const char * _ipv6_address,
             int _server_port
         )
 {
     if(ip_version!=AF_INET6){
         throw socket_exception("non_ipv6_socket can not be binded to ipv6 address!");
     }
+
     delete  server_socket_info_ipv6;
-    server_socket_info_ipv6=new socket_info_addr_ipv6(_ipv6_address,_server_port);
+    server_socket_info_ipv6=new socket_info_addr_ipv6();
+    if(strcmp(_ipv6_address," ")!=0&&_server_port!=0){
+        //std::cout << "check failed  "<<std::endl;
+        server_socket_info_ipv6->set_ip_port_ipv6(_ipv6_address,_server_port);
+    }
     const sockaddr_in6 *temp=server_socket_info_ipv6->get_sockaddr();
     socklen_t socket_size=sizeof(*temp);
     int result=bind(
@@ -85,9 +94,7 @@ void server_socket::bind_socket_to_ipv6_port(
         socket_size
     );
     if(result<0){
-        int err = errno;
-        fprintf(stderr, "*** ERROR  bind failed:%d(%s)\n", err, strerror(err) );
-        exit(EXIT_FAILURE);
+        systemcall_error_info();
         throw socket_exception("failed to bind socket!");
     }
     return ;

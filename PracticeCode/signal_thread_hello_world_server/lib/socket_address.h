@@ -5,14 +5,12 @@
 
 namespace SONNIE{
 
-inline uint8_t *init_ipv6_addr(){
-    return new uint8_t[16]{0};
-}
 
 class socket_info_addr_ipv4
 {
     private:
         sockaddr_in *addr_ptr;
+        in_addr *dest;// useed for saving ipv4 address
     public:
         socket_info_addr_ipv4(
             decltype(INADDR_ANY) _ipv4_address=INADDR_ANY,
@@ -20,7 +18,7 @@ class socket_info_addr_ipv4
         );
         ~socket_info_addr_ipv4();
         sockaddr_in *get_sockaddr()const;
-        void change_ip_port_ipv4(
+        void set_ip_port_ipv4(
             const char *_ipv4_address,
             int _server_port
         );
@@ -31,22 +29,18 @@ class socket_info_addr_ipv6
 {
     private:
         sockaddr_in6 *addr_ptr;
-        // const decltype(AF_INET6) ip_version;
-        // uint8_t ipv6_address[16];
-        // const int server_port;
-
+        in6_addr *dest;//used for saving ipv6 address
     public:
         socket_info_addr_ipv6(
-            struct in6_addr _ipv4_address=IN6ADDR_ANY_INIT,
+            in6_addr _ipv6_address=in6addr_any,
             int _server_port=8888
         );
         ~socket_info_addr_ipv6();
         sockaddr_in6* get_sockaddr()const;
-        void change_ip_port_ipv6(
-            uint8_t _ipv6_address[16],
+        void set_ip_port_ipv6(
+            const char *_ipv6_address,
             int _server_port
         );
-
 };
 
 }

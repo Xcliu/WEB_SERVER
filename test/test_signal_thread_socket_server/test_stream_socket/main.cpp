@@ -12,7 +12,7 @@ int main(){
     try{
         server_socket_stream server_socket_obj(AF_INET,1);
         server_socket_obj.create_socket();
-        server_socket_obj.bind_socket_to_ipv4_port();
+        server_socket_obj.bind_socket_to_ipv4_port("127.0.0.1",8888);
         server_socket_obj.listen_ip_port();
         while(1){
             server_socket_obj.accept_client_request();
@@ -26,7 +26,6 @@ int main(){
             */
             int fd_html=open(INDEX_HTML_DIR,O_RDONLY);
             std::cout << fd_html <<std::endl; 
-            
             // off_t send_size=1024;
             // struct sf_hdtr obj;
             // int tag=sendfile(fd_html,server_socket_obj.server_connected_socket_fd,0,&send_size,&obj,0);

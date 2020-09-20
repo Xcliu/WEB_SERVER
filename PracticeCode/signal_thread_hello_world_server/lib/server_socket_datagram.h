@@ -10,10 +10,7 @@
 namespace SONNIE{
 
 class server_socket_datagram:public server_socket
-{
-    private:
-        // how many clients cloud be blocked in one server socket 
-        
+{        
     public: 
         server_socket_datagram(
             decltype(AF_INET) _ip_version=AF_INET
@@ -26,8 +23,8 @@ class server_socket_datagram:public server_socket
             int _server_port
         );
         void set_client_addr_ipv6(
-            uint8_t _ipv6_address[16]={0},
-            int _server_port=8888
+            const char *_ipv6_address,
+            int _server_port
         );
    
 };

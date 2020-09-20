@@ -11,7 +11,6 @@ class server_socket{
     protected:
         const decltype(AF_INET) ip_version;
         const decltype(SOCK_STREAM) socket_type;
-
         int server_socket_fd;
         /*
         * allocating memory in heap
@@ -33,16 +32,15 @@ class server_socket{
         virtual ~server_socket();
         void create_socket();
         void bind_socket_to_ipv4_port(
-            decltype(INADDR_ANY) _ipv4_address=INADDR_ANY,
-            int _server_port=8888
+            const char *_ipv4_address=" ",
+            int _server_port=0
         );
         void bind_socket_to_ipv6_port(
-            struct in6_addr _ipv4_address=IN6ADDR_ANY_INIT,
-            int _server_port=8888
+            const char *_ipv6_address=" ",
+            int _server_port=0
         );
         virtual const std::string &receive_data_from_client(bool save_client_addr)=0;
         virtual void send_short_mesg(const std::string &str)=0;
-        
         void close_server_socket()const;
         void set_mesg_buffer_size(size_t size);      
 };

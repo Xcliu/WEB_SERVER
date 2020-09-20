@@ -10,13 +10,24 @@ using namespace SONNIE;
 server_socket_stream::server_socket_stream(
         decltype(AF_INET) _ip_version,
         int _client_num
-    ):server_socket(_ip_version,SOCK_STREAM),
-    backlog(_client_num)
+    ):server_socket(_ip_version,SOCK_STREAM),backlog(_client_num)
 {
     if(ip_version==AF_INET){
-        client_socket_info_ipv4=new socket_info_addr_ipv4();
+        try{
+            client_socket_info_ipv4=new socket_info_addr_ipv4();
+        }catch(const std::bad_alloc &_bad_alloc){
+            client_socket_info_ipv4=nullptr;
+            code_position_info();
+            std::cout<<_bad_alloc.what()<<std::endl;;
+        }
     }else if(ip_version==AF_INET6){
-        client_socket_info_ipv6=new socket_info_addr_ipv6();
+        try{
+            client_socket_info_ipv6=new socket_info_addr_ipv6();
+        }catch(const std::bad_alloc &_bad_alloc){
+            client_socket_info_ipv6=nullptr;
+            code_position_info();
+            std::cout<<_bad_alloc.what()<<std::endl;;
+        }
     }
     server_connected_socket_fd=-1;
 }
@@ -24,7 +35,6 @@ server_socket_stream::server_socket_stream(
 server_socket_stream::~server_socket_stream(){
    server_socket::~server_socket();
 }
-
 
 void server_socket_stream::listen_ip_port(){
     int result=listen(server_socket_fd,backlog);
@@ -39,10 +49,10 @@ void server_socket_stream::accept_client_request(){
     if(ip_version==AF_INET){
         sockaddr_in *temp=client_socket_info_ipv4->get_sockaddr();
         client_addrLength=sizeof(*temp); //the size before casting 
-        
         // std::cout<< "fuck lib"<<std::endl;
         server_connected_socket_fd=accept(server_socket_fd,(struct sockaddr*)temp,&client_addrLength);
         if(server_connected_socket_fd==-1){
+            systemcall_error_info();
             throw socket_exception("failed to accept!");
         }
     }else if(ip_version==AF_INET6){
@@ -50,6 +60,7 @@ void server_socket_stream::accept_client_request(){
         client_addrLength=sizeof(*temp);
         server_connected_socket_fd=accept(server_socket_fd,(struct sockaddr*)temp,&client_addrLength);
         if(server_connected_socket_fd==-1){
+            systemcall_error_info();
             throw socket_exception("failed to accept!");
         }
     }
@@ -61,12 +72,13 @@ const std::string &server_socket_stream::receive_data_from_client(bool){
     std::fill(temp,temp+max_buffer_size,'\0');
     int result=recv(server_connected_socket_fd,temp,max_buffer_size,0);
     //the size of recvd_msg_buffer is equal to result,(the size of received msg)
-    recvd_mesg_buffer=temp;
     if(recvd_mesg_buffer.size()==max_buffer_size){
         throw socket_exception("the receive buffer is overflowed");
     }else if(recvd_mesg_buffer.size()<0){
+        systemcall_error_info();
         throw socket_exception("fail to receive messages");
     }
+    recvd_mesg_buffer=temp;
     return recvd_mesg_buffer;
 }
 
@@ -77,6 +89,7 @@ void server_socket_stream::send_short_mesg(const std::string &str){
     }
     int s = send(server_connected_socket_fd,str.c_str(),str.size(),0);//发送响应
     if (s<0){
+        systemcall_error_info();
         throw socket_exception("failed to send short meaasge");
     }
     send_mesg_buffer=str;
@@ -94,6 +107,7 @@ void server_socket_stream::send_file_to_client(const int file_fd, int size)const
     struct sf_hdtr obj{nullptr,0,nullptr,0}; //local scope下不会做默认初始化的！！！
     int temp=sendfile(file_fd,server_connected_socket_fd,0,&send_size,&obj,0);//零拷贝发送消息体
     if(temp==-1){
+        systemcall_error_info();
         throw socket_exception("failed to send file.");
     }
     return ;
@@ -102,11 +116,30 @@ void server_socket_stream::send_file_to_client(const int file_fd, int size)const
 
 void server_socket_stream::close_connect_socket(){
     if(close(server_connected_socket_fd)==-1){
+        systemcall_error_info();
         throw socket_exception("failed to close connected scoket");
     }
 }
 
 int server_socket_stream::get_connect_fd()const{
     return server_connected_socket_fd;
+}
+
+std::string server_socket_stream::get_client_info_ipv4()const{
+    sockaddr_in *temp=client_socket_info_ipv4->get_sockaddr();
+    char dst[sizeof(temp->sin_addr)];
+    if(inet_ntop(AF_INET,&(temp->sin_addr),dst,sizeof(temp->sin_addr))==nullptr){
+        throw socket_exception("fail to tranfrom ip to string");
+    }
+    return std::string(dst)+";"+std::to_string(ntohs(temp->sin_port));
+}
+
+std::string server_socket_stream::get_client_info_ipv6()const{
+    sockaddr_in6 *temp=client_socket_info_ipv6->get_sockaddr();
+    char dst[sizeof(temp->sin6_addr)];
+    if(inet_ntop(AF_INET6,&(temp->sin6_addr),dst,sizeof(temp->sin6_addr))==nullptr){
+        throw socket_exception("fail to tranfrom ip to string");
+    }
+    return std::string(dst)+";"+std::to_string(ntohs(temp->sin6_port));
 }
 

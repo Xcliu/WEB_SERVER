@@ -16,7 +16,6 @@ class server_socket_stream:public server_socket
         // how many clients cloud be blocked in one server socket 
         const int backlog; 
         int server_connected_socket_fd;
-
     public: 
         server_socket_stream(
             decltype(AF_INET) _ip_version=AF_INET,
@@ -30,6 +29,8 @@ class server_socket_stream:public server_socket
         void send_file_to_client(int file_fd, int size)const;
         void close_connect_socket();
         int get_connect_fd()const;
+        std::string get_client_info_ipv4()const;
+        std::string get_client_info_ipv6()const;
    
 };
 
