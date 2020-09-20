@@ -10,10 +10,12 @@ class socket_info_addr_ipv4
 {
     private:
         sockaddr_in *addr_ptr;
-        in_addr *dest;// useed for saving ipv4 address
+        // useed for saving ipv4 address (struct type) in transforming string to it  
+        in_addr *dest;
     public:
         socket_info_addr_ipv4(
-            decltype(INADDR_ANY) _ipv4_address=INADDR_ANY,
+            //struct type (in_addr) containing the ipv4 address
+            decltype(INADDR_ANY) _ipv4_address=INADDR_ANY, 
             int _server_port=8888
         );
         ~socket_info_addr_ipv4();
@@ -24,12 +26,12 @@ class socket_info_addr_ipv4
         );
 };
 
-
 class socket_info_addr_ipv6
 {
     private:
         sockaddr_in6 *addr_ptr;
-        in6_addr *dest;//used for saving ipv6 address
+        // useed for saving ipv4 address (struct type) in transforming string to it 
+        in6_addr *dest;
     public:
         socket_info_addr_ipv6(
             in6_addr _ipv6_address=in6addr_any,

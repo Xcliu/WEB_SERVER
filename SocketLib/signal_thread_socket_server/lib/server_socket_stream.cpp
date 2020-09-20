@@ -125,21 +125,5 @@ int server_socket_stream::get_connect_fd()const{
     return server_connected_socket_fd;
 }
 
-std::string server_socket_stream::get_client_info_ipv4()const{
-    sockaddr_in *temp=client_socket_info_ipv4->get_sockaddr();
-    char dst[sizeof(temp->sin_addr)];
-    if(inet_ntop(AF_INET,&(temp->sin_addr),dst,sizeof(temp->sin_addr))==nullptr){
-        throw socket_exception("fail to tranfrom ip to string");
-    }
-    return std::string(dst)+";"+std::to_string(ntohs(temp->sin_port));
-}
 
-std::string server_socket_stream::get_client_info_ipv6()const{
-    sockaddr_in6 *temp=client_socket_info_ipv6->get_sockaddr();
-    char dst[sizeof(temp->sin6_addr)];
-    if(inet_ntop(AF_INET6,&(temp->sin6_addr),dst,sizeof(temp->sin6_addr))==nullptr){
-        throw socket_exception("fail to tranfrom ip to string");
-    }
-    return std::string(dst)+";"+std::to_string(ntohs(temp->sin6_port));
-}
 

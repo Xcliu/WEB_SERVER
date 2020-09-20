@@ -4,7 +4,6 @@
 #include "socket_related_head_file.h"
 #include "socket_address.h"
 #include "server_socket.h"
-
 #include <string>
 
 namespace SONNIE{
@@ -26,7 +25,6 @@ class server_socket_datagram:public server_socket
             const char *_ipv6_address,
             int _server_port
         );
-   
 };
 
 } //end of the namespace sonnie
