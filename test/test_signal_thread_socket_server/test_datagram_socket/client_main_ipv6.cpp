@@ -6,13 +6,15 @@
 using namespace SONNIE; 
 
 int main(){
-    std::cout << "********WEB client**********" <<std::endl;
+    std::cout << "********WEB client(ipv6)**********" <<std::endl;
     try{
-        server_socket_datagram *server_socket_obj=new server_socket_datagram(AF_INET);
+        
+        server_socket_datagram *server_socket_obj=new server_socket_datagram(AF_INET6);
         server_socket_obj->create_socket();
-        std::string str_send="message from client, your fucking udp server!";
-        //in_addr_t ipv4_addr=inet_addr("127.0.0.1");
-        server_socket_obj->set_client_addr_ipv4("127.0.0.1",9527);
+        std::string str_send="fucking, udp server!";
+        
+        //server_socket_obj->set_client_addr_ipv6(ipv4_addr,9527);
+        
         server_socket_obj->send_short_mesg(str_send);
     }catch (socket_exception &exp_s){
             std::cout << exp_s.what()<<std::endl;

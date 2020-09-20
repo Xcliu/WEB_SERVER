@@ -22,8 +22,8 @@ class server_socket_datagram:public server_socket
         virtual const std::string &receive_data_from_client(bool save_client_addr);
         virtual void send_short_mesg(const std::string &str);
         void set_client_addr_ipv4(
-            decltype(INADDR_ANY) _ipv4_address=INADDR_ANY,
-            int _server_port=8888
+            const char *_ipv4_address,
+            int _server_port
         );
         void set_client_addr_ipv6(
             uint8_t _ipv6_address[16]={0},

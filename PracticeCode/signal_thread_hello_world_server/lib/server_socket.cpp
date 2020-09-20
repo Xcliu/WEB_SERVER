@@ -32,6 +32,7 @@ void server_socket::create_socket(){
     //another scoket is SOCK_DGRAM (based on UDP)
     //the operations on TCP and udp are totally different
     if(socket_type==SOCK_DGRAM){
+        /*not necessary*/
         server_socket_fd=socket(ip_version,socket_type,IPPROTO_UDP);
     }else if(socket_type==SOCK_STREAM){
         server_socket_fd=socket(ip_version,socket_type,0);
@@ -67,7 +68,7 @@ void server_socket::bind_socket_to_ipv4_port(
 }
 
 void server_socket::bind_socket_to_ipv6_port(
-            uint8_t _ipv6_address[16],
+            struct in6_addr _ipv6_address,
             int _server_port
         )
 {
@@ -84,6 +85,9 @@ void server_socket::bind_socket_to_ipv6_port(
         socket_size
     );
     if(result<0){
+        int err = errno;
+        fprintf(stderr, "*** ERROR  bind failed:%d(%s)\n", err, strerror(err) );
+        exit(EXIT_FAILURE);
         throw socket_exception("failed to bind socket!");
     }
     return ;

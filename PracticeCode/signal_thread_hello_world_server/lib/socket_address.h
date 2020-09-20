@@ -4,6 +4,11 @@
 #include "socket_related_head_file.h"
 
 namespace SONNIE{
+
+inline uint8_t *init_ipv6_addr(){
+    return new uint8_t[16]{0};
+}
+
 class socket_info_addr_ipv4
 {
     private:
@@ -16,7 +21,7 @@ class socket_info_addr_ipv4
         ~socket_info_addr_ipv4();
         sockaddr_in *get_sockaddr()const;
         void change_ip_port_ipv4(
-            decltype(INADDR_ANY) _ipv4_address,
+            const char *_ipv4_address,
             int _server_port
         );
 };
@@ -32,7 +37,7 @@ class socket_info_addr_ipv6
 
     public:
         socket_info_addr_ipv6(
-            uint8_t _ipv6_address[16]={0},
+            struct in6_addr _ipv4_address=IN6ADDR_ANY_INIT,
             int _server_port=8888
         );
         ~socket_info_addr_ipv6();

@@ -21,14 +21,14 @@ add_library(socket  ${socket_exception}  ${socket_addr}
 
 target_include_directories(socket PUBLIC ${socket_code_dir})
 
-add_executable(server_main server_main.cpp)
-target_link_libraries(server_main PUBLIC socket)
-target_include_directories(server_main PUBLIC ${socket_code_dir}
+add_executable(server_main_ipv6 server_main_ipv6.cpp)
+target_link_libraries(server_main_ipv6 PUBLIC socket)
+target_include_directories(server_main_ipv6 PUBLIC ${socket_code_dir}
                                 PUBLIC ${PROJECT_BINARY_DIR})
 
-add_executable(client_main client_main.cpp)
-target_link_libraries(client_main PUBLIC socket)
-target_include_directories(client_main PUBLIC ${socket_code_dir}
+add_executable(client_main_ipv6 client_main_ipv6.cpp)
+target_link_libraries(client_main_ipv6 PUBLIC socket)
+target_include_directories(client_main_ipv6 PUBLIC ${socket_code_dir}
                                 PUBLIC ${PROJECT_BINARY_DIR})
 
 

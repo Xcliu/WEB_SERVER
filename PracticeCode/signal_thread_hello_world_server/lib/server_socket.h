@@ -37,7 +37,7 @@ class server_socket{
             int _server_port=8888
         );
         void bind_socket_to_ipv6_port(
-            uint8_t _ipv6_address[16]={0},
+            struct in6_addr _ipv4_address=IN6ADDR_ANY_INIT,
             int _server_port=8888
         );
         virtual const std::string &receive_data_from_client(bool save_client_addr)=0;
