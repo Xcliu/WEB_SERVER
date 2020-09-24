@@ -8,5 +8,9 @@ hello_world_server:
 run:
 	./$(sourece_file)>log.txt
 
+thread_file=thread_create
+thread:
+	g++ -std=c++11 -o ${thread_file} ${thread_file}.cpp
+
 clean:
 	rm ./$(sourece_file) log.txt

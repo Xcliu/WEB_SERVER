@@ -6,4 +6,4 @@
 
 * The exception handling will be added
 
-* The multithread feature will be realized by OpenMp or the c++ thread API
+* The multithread feature will be realized c++11 thread API
