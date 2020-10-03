@@ -1,8 +1,14 @@
-#include <exception>
+/*
+*used for open()
+*/
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <sys/select.h>
+/*
+* used for system call poll()
+*/
+#include <poll.h>
+
 /*
 used for macro system_error_info
 */
@@ -10,6 +16,7 @@ used for macro system_error_info
 #include <sys/errno.h>
 #include <string.h>
 #define systemcall_error_info() fprintf(stderr, "*** ERROR %s, failed:%d(%s)\n", __func__,errno, strerror(errno));
+
 /*
 used for exit 
 */
@@ -17,7 +24,7 @@ used for exit
 
 //open some files and return fd
 static const unsigned int fd_size=3;
-int fd_array[fd_size]{-1,-1,-1};
+pollfd fd_array[fd_size];
 
 void creat_fd_array(){
     /*must be set as nonblock*/
@@ -26,7 +33,7 @@ void creat_fd_array(){
         systemcall_error_info();
         exit(1);
     }else{
-        fd_array[0]=return_fd;
+        fd_array[0]={return_fd,POLLIN,POLL_IN};
     }
 
     return_fd=open("./read_exist.txt",O_RDONLY|O_NONBLOCK);
@@ -34,7 +41,7 @@ void creat_fd_array(){
         systemcall_error_info();
         exit(1);
     }else{
-        fd_array[1]=return_fd;
+        fd_array[1]={return_fd,POLL_IN,POLL_IN};
     }
 
     return_fd=open("./write.txt",O_RDWR|O_CREAT|O_NONBLOCK);
@@ -42,29 +49,20 @@ void creat_fd_array(){
         systemcall_error_info();
         exit(1);
     }else{
-        fd_array[2]=return_fd;
+        fd_array[2]={return_fd,POLL_OUT|POLL_IN,POLL_OUT|POLL_IN};
     }
 }
 
 int main(int argc,char *argv[]){
     
-    fd_set *R_fd_ptr=new fd_set; 
-    fd_set *W_fd_ptr=new fd_set;
-    FD_ZERO(R_fd_ptr);FD_ZERO(W_fd_ptr);
-
     creat_fd_array();
-
-    for(int i=0;i<3;++i){
-        FD_SET(fd_array[i],R_fd_ptr);
-    }
-    FD_SET(fd_array[2],W_fd_ptr);
 
     timeval set_time;set_time.tv_sec=2;
 
     /*
     nfds shouled be set as sum(r_fd,w_fd,e_fd)+1?
     */
-    int total_num=select(6,R_fd_ptr,W_fd_ptr,nullptr,&set_time);
+    int total_num=poll(fd_array,fd_size,1000);
     if(total_num<0){
         systemcall_error_info();
         exit(1);
@@ -73,25 +71,19 @@ int main(int argc,char *argv[]){
         exit(EXIT_FAILURE);
     }
 
-    if(FD_ISSET(fd_array[0],R_fd_ptr)){
+    if(fd_array[0].revents&POLL_IN){
         printf("./read.txt is ready\n");
     }
 
-    if(FD_ISSET(fd_array[1],R_fd_ptr)){
+    if(fd_array[1].revents&POLL_IN){
         printf("./read_exist.txt is ready\n");
     }
 
-    if(FD_ISSET(fd_array[2],W_fd_ptr)){
+    if((fd_array[2].revents&POLL_IN) && (fd_array[2].revents&POLL_OUT) ){
         printf("./write.txt is ready\n");
     }
-    delete R_fd_ptr; delete W_fd_ptr;
-    for(int i=0;i<fd_size;++i){
-        close(fd_array[i]);
-    }
-    
     return 0;
+    for(int i=0;i<fd_size;++i){
+        close(fd_array[i].fd);
+    }
 }
-
-
-
-
