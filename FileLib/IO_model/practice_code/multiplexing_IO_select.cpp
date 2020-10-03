@@ -62,7 +62,7 @@ int main(int argc,char *argv[]){
     timeval set_time;set_time.tv_sec=2;
 
     /*
-    nfds shouled be set as sum(r_fd,w_fd,e_fd)+1?
+    nfds shouled be set as amx(r_fd,w_fd,e_fd)+1
     */
     int total_num=select(6,R_fd_ptr,W_fd_ptr,nullptr,&set_time);
     if(total_num<0){
