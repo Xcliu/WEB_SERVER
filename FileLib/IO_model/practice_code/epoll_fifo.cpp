@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     struct epoll_event evlist[MAX_EVENTS];
     char buf[MAX_BUF];
     if (argc < 2 || strcmp(argv[1], "--help") == 0){
-        printf("%s file...\n", argv[0]);
+        printf("%s file_name...\n", argv[0]);
         exit(EXIT_FAILURE);
     }
     
@@ -43,9 +43,9 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-/* Open each file on command line, and add it to the "interest
-*list" for the epoll instance 
-*/
+    /* Open each file on command line, and add it to the "interest
+    *list" for the epoll instance 
+    */
     for (int j = 1; j < argc; ++j) {
         fd = open(argv[j], O_RDONLY);
         if (fd == -1){
@@ -59,12 +59,11 @@ int main(int argc, char *argv[])
             systemcall_error_info();
             exit(EXIT_FAILURE);
         }
-            
     }
 
     numOpenFds = argc - 1;
     while (numOpenFds > 0){
-/* Fetch up to MAX_EVENTS items from the ready list */
+    /* Fetch up to MAX_EVENTS items from the ready list */
         printf("About to epoll_wait()\n");
         ready = epoll_wait(epfd, evlist, MAX_EVENTS, -1);
         if (ready == -1) {
@@ -74,6 +73,7 @@ int main(int argc, char *argv[])
             systemcall_error_info();
             exit(EXIT_FAILURE);
         }
+        // ready is the num of ready fd;
         printf("Ready: %d\n", ready);
         /* Deal with returned list of events */
         for (int j = 0; j < ready; j++) {
@@ -89,11 +89,11 @@ int main(int argc, char *argv[])
                 }
                 printf(" read %d bytes: %.*s\n", s, s, buf);
             } else if (evlist[j].events & (EPOLLHUP | EPOLLERR)) {
-/* If EPOLLIN and EPOLLHUP were both set, then there might
-*be more than MAX_BUF bytes to read. Therefore, we close
-*the file descriptor only if EPOLLIN was not set.
-*We'll read further bytes after the next epoll_wait(). 
-*/
+            /* If EPOLLIN and EPOLLHUP were both set, then there might
+            *be more than MAX_BUF bytes to read. Therefore, we close
+            *the file descriptor only if EPOLLIN was not set.
+            *We'll read further bytes after the next epoll_wait(). 
+            */
                 printf(" closing fd %d\n", evlist[j].data.fd);
                 if (close(evlist[j].data.fd) == -1){
                     systemcall_error_info();
