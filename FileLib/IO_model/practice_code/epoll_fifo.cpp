@@ -67,11 +67,13 @@ int main(int argc, char *argv[])
         printf("About to epoll_wait()\n");
         ready = epoll_wait(epfd, evlist, MAX_EVENTS, -1);
         if (ready == -1) {
-            if (errno == EINTR)
-            continue; /* Restart if interrupted by signal */
-        }else{
-            systemcall_error_info();
-            exit(EXIT_FAILURE);
+            if (errno == EINTR){
+                continue; /* Restart if interrupted by signal */
+            }else{
+                printf("EINTR:%d",EINTR);
+                systemcall_error_info();
+                exit(EXIT_FAILURE);
+            }
         }
         // ready is the num of ready fd;
         printf("Ready: %d\n", ready);
