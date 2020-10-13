@@ -1,9 +1,10 @@
 #pragma once
-
 #include <mutex>
-
+/*
+*existing dengerous bugs !
+*the correct implementation of the write_read lock in "/ThreadLib/write_read_lock.h"
+*/
 namespace SONNIE{
-
 template<typename T>
 class shared_lock_guard{
     private:
