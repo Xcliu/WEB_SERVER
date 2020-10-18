@@ -6,4 +6,4 @@
 
 * The exception handling will be added
 
-* The multithread feature will be realized by c++11 thread API.
+* The multithread features will be realized by c++11 thread API.
