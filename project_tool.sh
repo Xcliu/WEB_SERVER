@@ -14,8 +14,21 @@ function clear_cached_cmakefiles()
         done
 }
 
+function complie()
+{
+    cd ./$1
+    mkdir cmake_build
+    cd ./cmake_build
+    cmake ..
+    make 
+}
+
 init_path=.
 
 if [[ $1 == "clean_cache" ]] ;then
-    clear_cached_cmakefiles $init_path
+        clear_cached_cmakefiles $init_path
+    else
+        if [[ $1 == "complie" ]]; then
+            complie $2
+        fi
 fi
