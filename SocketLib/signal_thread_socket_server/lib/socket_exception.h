@@ -19,6 +19,7 @@ class socket_exception:std::exception{
         const char* what();
     private:
         std::string error_mesg; 
-}; 
+};
+ 
 }
 #endif
