@@ -1,2 +1,0 @@
-/usr/bin/ar qc libreflection.a  CMakeFiles/reflection.dir/root/lxc/git_project/WEB_SERVER/utils/ReflectionLib/reflection.cpp.o
-/usr/bin/ranlib libreflection.a

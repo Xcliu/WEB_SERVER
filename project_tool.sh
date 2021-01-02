@@ -5,10 +5,10 @@ function clear_cached_cmakefiles()
     for var in `ls $1`
         do
         if test -d "$1/${var}";then
-            if [[ "$var" == "CMakeFiles" ]];then
+            if [[ "$var" == "cmake_build" ]];then
                 rm -rf ${1}/${var}
             else 
-                clear_all "$1/${var}"
+                clear_cached_cmakefiles "$1/${var}"
             fi
         fi
         done
@@ -16,6 +16,6 @@ function clear_cached_cmakefiles()
 
 init_path=.
 
-if [[ $1 == "clear_cache" ]] ;then
+if [[ $1 == "clean_cache" ]] ;then
     clear_cached_cmakefiles $init_path
 fi
