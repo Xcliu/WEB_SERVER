@@ -1,0 +1,4 @@
+/root/lxc/git_project/WEB_SERVER/test/test_reflection/cmake_build/CMakeFiles/rebuild_cache.dir
+/root/lxc/git_project/WEB_SERVER/test/test_reflection/cmake_build/CMakeFiles/edit_cache.dir
+/root/lxc/git_project/WEB_SERVER/test/test_reflection/cmake_build/CMakeFiles/reflection.dir
+/root/lxc/git_project/WEB_SERVER/test/test_reflection/cmake_build/CMakeFiles/reflection_test.dir

@@ -4,6 +4,9 @@
 #include <string>
 #include <memory>
 
+// NOTE(lxc,2021-1-2): 使用REGISTER(name)时会给name 对象分配堆内存，
+// 这一部分内存需要使用REGISER机制的 client 来管理（delete） 
+
 namespace SONNIE{
 
 class Factory_Base{
@@ -17,9 +20,6 @@ std::unordered_map<std::string, Factory_Base*>& name_to_factory();
 void* GET_INSTANCE_BY_NAME(std::string name);
 
 } // end of namespace SONNIE
-
-// NOTE(lxc,2021-1-2): 使用REGISTER(name)时会给name 对象分配堆内存，
-// 这一部分内存需要使用REGISER机制的 client 来管理（delete） 
 
 #define REGISTER(name) \
     class Factory_##name : public SONNIE::Factory_Base{ \
