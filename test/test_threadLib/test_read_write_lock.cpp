@@ -22,7 +22,8 @@ void r_func(Write_read_lock &wrl,
     
     result.push_back("tid: ");
     auto temp=std::this_thread::get_id();
-    //result.push_back((char *)&temp);// 注意这里把十六进制数转string的方法
+    //result.push_back((char *)&temp);
+    // 注意这里把十六进制数转string的方法
     result.push_back("-->");
 
     //std::cout<<"tid:"<<std::this_thread::get_id()<<"-->";
