@@ -1,10 +1,10 @@
 # WEB_SERVER
 
-## Introduction to this project 
+## Introduction
 
 The web server named SONNIE is mainly wrote by c++, and the c-style UNIX socket API is also widely used. Up to now, the sample communication based on TCP and UDP is supported. The sample exception handling mechnism is added. In addition, some useful utils is also developed, such as the the thread pool and the reflection lib which implement the sample refection machnism based on C++11. The multi-threding, coroutine and IO-multiplexing, which are the key techonlogies for concurrency, are undering developing. Finally, I will try to make SONNIE support CGI(common gateway interface).
 
-## How to use it
+## How to use 
 1.write the top level CMakeLists.txt file which contain the sub-CMakelists.txt for the target lib or binary.
 
 example:
@@ -28,7 +28,7 @@ remove the cached cmake build directory:
 ./project_tool.sh clean_cache 
 ```
 
-## The architecture of this project
+## The architecture 
 +++ d: **BUILD**(may be not exist) contain the cmake cache file
 
 +++ d: **sand_box** contain casual codes
