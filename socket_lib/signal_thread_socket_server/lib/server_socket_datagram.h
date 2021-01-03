@@ -1,7 +1,7 @@
 #ifndef SERVER_SOCKET_DATAGRAM_H_
 #define SERVER_SOCKET_DATAGRAM_H_
 
-#include "socket_related_head_file.h"
+#include "socket_common_define.h"
 #include "socket_address.h"
 #include "server_socket.h"
 #include <string>

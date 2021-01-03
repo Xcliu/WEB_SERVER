@@ -37,7 +37,7 @@ remove the cached cmake build directory:
 
 +++ d: **unit_test** testing code for other libs 
 
-+++ d: **util**s** contains some useful tools
++++ d: **utils** contains some useful tools
 
 +++ f: **CMakeLists.txt** top level cmake file used to define how to gennerate your lib or bin
 

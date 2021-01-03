@@ -1,4 +1,5 @@
 #pragma once
+#include <string.h> //used for strerror()
 
 #define code_position_info() \
     printf("\n******\nfunction: %s() in file: %s (line: %d)\n******\n", \

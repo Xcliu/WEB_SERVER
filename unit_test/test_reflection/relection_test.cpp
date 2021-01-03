@@ -23,7 +23,6 @@ class MinusExecutor: public BaseExecutor{
     }
 };
 
-
 REGISTER(PlusExecutor);
 REGISTER(MinusExecutor);
 

@@ -1,7 +1,7 @@
 #ifndef SOCKET_ADDRESS_H_
 #define SOCKET_ADDRESS_H_
 
-#include "socket_related_head_file.h"
+#include "socket_common_define.h"
 
 namespace SONNIE{
 
