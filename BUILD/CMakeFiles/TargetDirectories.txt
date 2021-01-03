@@ -1,8 +1,0 @@
-/root/lxc/git_project/WEB_SERVER/BUILD/CMakeFiles/rebuild_cache.dir
-/root/lxc/git_project/WEB_SERVER/BUILD/CMakeFiles/edit_cache.dir
-/root/lxc/git_project/WEB_SERVER/BUILD/utils/ReflectionLib/CMakeFiles/rebuild_cache.dir
-/root/lxc/git_project/WEB_SERVER/BUILD/utils/ReflectionLib/CMakeFiles/reflect_lib.dir
-/root/lxc/git_project/WEB_SERVER/BUILD/utils/ReflectionLib/CMakeFiles/edit_cache.dir
-/root/lxc/git_project/WEB_SERVER/BUILD/unit_test/test_reflection/CMakeFiles/rebuild_cache.dir
-/root/lxc/git_project/WEB_SERVER/BUILD/unit_test/test_reflection/CMakeFiles/reflection_test.dir
-/root/lxc/git_project/WEB_SERVER/BUILD/unit_test/test_reflection/CMakeFiles/edit_cache.dir

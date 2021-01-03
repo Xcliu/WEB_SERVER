@@ -1,2 +1,0 @@
-/usr/bin/ar qc libreflect_lib.a  CMakeFiles/reflect_lib.dir/reflection.cpp.o
-/usr/bin/ranlib libreflect_lib.a

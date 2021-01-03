@@ -28,3 +28,17 @@ remove the cached cmake build directory:
 ./project_tool.sh clean_cache 
 ```
 
+## The architecture of this project
++++ d: **BUILD**(may be not exist) contain the cmake cache file
+
++++ d: **sand_box** contain casual codes
+
++++ d: **socket_lib** contain the socket lib based on  UNIX socket API
+
++++ d: **unit_test** testing code for other libs 
+
++++ d: **util**s** contains some useful tools
+
++++ f: **CMakeLists.txt** top level cmake file used to define how to gennerate your lib or bin
+
++++ f: **project_tool** shell script used to complie your project defined in top level cmake 
