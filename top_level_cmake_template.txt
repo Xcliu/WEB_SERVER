@@ -4,7 +4,8 @@ project(reflect_lib VERSION 0.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# equivalent to g++ ... -I ... 
 include_directories($ENV{WEB_SERVER_PATH})
+# equivalent to g++ ... -L ...
 link_directories($ENV{WEB_SERVER_PATH}
 
-add_subdirectory(socket_lib/)

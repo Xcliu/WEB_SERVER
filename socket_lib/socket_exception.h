@@ -2,7 +2,7 @@
 #include <exception>
 #include <string>
 #include <iostream>
-#include "debug_common_info.h"
+#include "utils/debug_tool/debug_common_info.h"
 
 namespace SONNIE{
 
