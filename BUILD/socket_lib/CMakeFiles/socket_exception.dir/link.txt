@@ -1,2 +1,0 @@
-/usr/bin/ar qc libsocket_exception.a  CMakeFiles/socket_exception.dir/socket_exception.cpp.o
-/usr/bin/ranlib libsocket_exception.a

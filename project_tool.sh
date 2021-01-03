@@ -19,6 +19,9 @@ function clear_cache()
 function complie()
 {
     cd ./$1
+    if test -d "${cmake_dir_name}";then
+        rm -rf ${cmake_dir_name}  
+    fi
     mkdir ${cmake_dir_name}
     cd ./${cmake_dir_name}
     cmake ..

@@ -1,6 +1,0 @@
-/root/lxc/git_project/WEB_SERVER/BUILD/CMakeFiles/rebuild_cache.dir
-/root/lxc/git_project/WEB_SERVER/BUILD/CMakeFiles/edit_cache.dir
-/root/lxc/git_project/WEB_SERVER/BUILD/socket_lib/CMakeFiles/rebuild_cache.dir
-/root/lxc/git_project/WEB_SERVER/BUILD/socket_lib/CMakeFiles/edit_cache.dir
-/root/lxc/git_project/WEB_SERVER/BUILD/socket_lib/CMakeFiles/socket_exception.dir
-/root/lxc/git_project/WEB_SERVER/BUILD/socket_lib/CMakeFiles/socket_address.dir
