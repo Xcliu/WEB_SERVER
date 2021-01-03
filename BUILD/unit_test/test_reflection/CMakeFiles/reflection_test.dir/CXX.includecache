@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../utils/ReflectionLib/reflection.h
+unordered_map
+-
+string
+-
+memory
+-
+
+/root/lxc/git_project/WEB_SERVER/unit_test/test_reflection/relection_test.cpp
+reflection.h
+/root/lxc/git_project/WEB_SERVER/unit_test/test_reflection/reflection.h
+iostream
+-
+string
+-
+
