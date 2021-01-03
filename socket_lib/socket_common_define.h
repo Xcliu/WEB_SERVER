@@ -6,10 +6,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-/*for mac os*/
+// for mac os
 #if __APPLE__
     #include <sys/uio.h>
-/*for Linux system call*/
+// for Linux system call
 #elif __linux__ 
     #include <sys/sendfile.h>
 #endif

@@ -6,4 +6,5 @@ add_library(socket_exception socket_exception.cpp)
 target_include_directories(socket_exception PUBLIC "$ENV{WEB_SERVER_PATH}/utils/debug_tool"
                                              PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} )
 
-
+# generate socket_address lib
+                                            
