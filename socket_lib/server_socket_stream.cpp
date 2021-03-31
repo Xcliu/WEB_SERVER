@@ -1,7 +1,5 @@
-#include "server_socket.h"
-#include "server_socket_stream.h"
-#include "socket_address.h"
-#include "socket_exception.h"
+#include "WEB_SERVER/socket_lib/server_socket_stream.h"
+#include "WEB_SERVER/socket_lib/socket_exception.h"
 #include <cstring>
 #include <algorithm>
 #include <iostream>
@@ -78,10 +76,7 @@ void server_socket_stream::send_file_to_client(const int file_fd, int size)const
     if(size<0){
         throw socket_exception("the szie of sent file should be positive");
     }
-    off_t send_size=size; //in byte;
-    // exist difference for MacOs and linux 
-    struct ::sf_hdtr obj{nullptr,0,nullptr,0}; //local scope下不会做默认初始化的！！！
-    int temp=::sendfile(file_fd,server_connected_socket_fd_,0,&send_size,&obj,0);//零拷贝发送消息体
+    int temp = ::sendfile(server_connected_socket_fd_,file_fd,nullptr,size);
     if(temp==-1){
         systemcall_error_info();
         throw socket_exception("failed to send file.");
@@ -100,6 +95,7 @@ void server_socket_stream::close_connect_socket(){
 int server_socket_stream::get_connect_fd()const{
     return server_connected_socket_fd_;
 }
+
 
 
 

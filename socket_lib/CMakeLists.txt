@@ -8,4 +8,5 @@ add_library(socket_address socket_address.cpp )
 add_library(server_socket server_socket.cpp)
 
 add_library(server_socket_stream server_socket_stream.cpp)
-                                            
+
+add_library(server_socket_datagram server_socket_datagram.cpp)

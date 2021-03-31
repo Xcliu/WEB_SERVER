@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "socket_common_define.h"
-#include "socket_exception.h"
+#include "WEB_SERVER/socket_lib/socket_common_define.h"
+#include "WEB_SERVER/socket_lib/socket_exception.h"
 
 int main(){
     try{

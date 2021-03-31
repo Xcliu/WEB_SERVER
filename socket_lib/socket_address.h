@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "socket_common_define.h"
+#include "WEB_SERVER/socket_lib/socket_common_define.h"
 
 namespace SONNIE{
 
@@ -33,7 +33,7 @@ class socket_info_addr_ipv6
         virtual ~socket_info_addr_ipv6() = default;
         socket_info_addr_ipv6 (const socket_info_addr_ipv4& )= delete;
         socket_info_addr_ipv6& operator = (const socket_info_addr_ipv6& )=delete;
-
+        
         std::shared_ptr<sockaddr_in6> get_sockaddr()const;
         void change_ip_port_ipv6( const char *_ipv6_address, int _server_port);
 };

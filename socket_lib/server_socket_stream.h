@@ -2,8 +2,7 @@
 
 #include <string>
 #include "socket_common_define.h"
-#include "socket_address.h"
-#include "server_socket.h"
+#include "WEB_SERVER/socket_lib/server_socket.h"
 
 namespace SONNIE{
 

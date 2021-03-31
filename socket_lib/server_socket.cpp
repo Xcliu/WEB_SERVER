@@ -1,6 +1,7 @@
 #include <memory>
-#include "server_socket.h"
-#include "socket_exception.h"
+#include "WEB_SERVER/socket_lib/server_socket.h"
+#include "WEB_SERVER/utils/debug_tool/debug_common_info.h"
+#include "WEB_SERVER/socket_lib/socket_exception.h"
 using namespace SONNIE;
 
 
@@ -51,10 +52,9 @@ void server_socket::bind_socket_to_ipv6_port( const char * ipv6_address,
         //std::cout << "check failed  "<<std::endl;
         server_socket_info_ipv6_->change_ip_port_ipv6(ipv6_address,server_port);
     }
-    const auto temp=server_socket_info_ipv6_->get_sockaddr();
+    const auto temp = server_socket_info_ipv6_->get_sockaddr();
     socklen_t socket_size=sizeof(*temp);
-    int result=bind(server_socket_fd_, (struct sockaddr*)temp.get(),
-        socket_size);
+    int result=bind(server_socket_fd_, (struct sockaddr*)temp.get(),socket_size);
     if(result<0){
         systemcall_error_info();
         throw socket_exception("failed to bind socket!");
