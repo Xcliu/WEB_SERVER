@@ -31,15 +31,15 @@ void r_func(Write_read_lock &wrl, const std::string &obj)
 void multi_reader_writer()
 {
 
-    Write_read_lock wrl(WRITER_PREFER);
+    Write_read_lock wrl(READER_PREFER);
     std::string obj{"init_str"};
     std::vector<std::thread> all_t; //the default constructor of thread should not be called
     for (int i = 0; i < 10; ++i)
     {
-        all_t.push_back(std::thread(r_func, std::ref(wrl), std::ref(obj)));
-        if (i % 4 == 1)
-        {
+        if (i % 4 == 1){
             all_t.push_back(std::thread(w_func, std::ref(wrl), std::ref(obj)));
+        }else{
+            all_t.push_back(std::thread(r_func, std::ref(wrl), std::ref(obj)));
         }
     }
 

@@ -26,8 +26,12 @@ void Write_read_lock::writer_lock()
 {
     if (priority_type == WRITER_PREFER)
     {
+        //  如果指令exist_writer = true; mtx_rd.lock();可分割
+        //  在一个writer释放一个writer尝试持锁时会出现, writer持锁
+        //  但是exist_writer=false的状态, 所以最后再加一句exist_writer = true;
         exist_writer = true; //reader_lock()中条件变量配合实现写者优先
         mtx_rd.lock();
+        exist_writer = true;
     }
     else if (priority_type == READER_PREFER)
     {
