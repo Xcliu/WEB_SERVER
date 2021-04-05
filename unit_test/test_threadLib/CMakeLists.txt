@@ -9,3 +9,5 @@ add_executable(test_read_write_lock test_read_write_lock.cpp)
 target_link_libraries(test_read_write_lock PUBLIC write_read_lock)
 
 add_executable(test_thread_safe_queue test_thread_safe_queue.cpp)
+
+add_executable(test_thread_pool test_thread_pool.cpp)
