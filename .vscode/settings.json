@@ -68,6 +68,8 @@
         "ios": "cpp",
         "iterator": "cpp",
         "locale": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "numeric": "cpp",
+        "random": "cpp"
     }
 }
