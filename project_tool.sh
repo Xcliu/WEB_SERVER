@@ -30,7 +30,7 @@ function complie()
 
 init_path=.
 
-if [[ $1 == "clean_cache" ]] ;then
+if [[ $1 == "clean_build" ]] ;then
         clear_cache $init_path
     else
         if [[ $1 == "complie" ]]; then

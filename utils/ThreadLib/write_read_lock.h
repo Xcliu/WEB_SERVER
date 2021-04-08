@@ -1,9 +1,3 @@
-/*
-* This lib is under testing 
-* 2020-11-13
-* lxc
-*/
-
 #pragma once
 #include <mutex>
 #include <condition_variable>
